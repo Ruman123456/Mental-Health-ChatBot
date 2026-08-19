@@ -28,7 +28,7 @@ else:
 
 # Configure Groq AI
 groq_client = Groq(api_key=GROQ_API_KEY)
-MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct"  # Updated: older Llama models were decommissioned
+MODEL_NAME = "openai/gpt-oss-20b"  # Currently available on Groq (Llama models were all decommissioned)
 
 # Initialize ChromaDB for RAG
 client = chromadb.PersistentClient(path="./mental_health_memory")
