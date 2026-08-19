@@ -69,6 +69,14 @@ def analyze_sentiment(text):
             emotions = json.loads(match.group(0).replace("'", '"'))
         except Exception:
             emotions = {}
+    # Fallback defaults if parsing fails
+    default_emotions = {"sadness": 0.0, "joy": 0.0, "love": 0.0, "anger": 0.0, "fear": 0.0, "surprise": 0.0}
+    if not emotions:
+        emotions = default_emotions
+        if not detected_emotion:
+            detected_emotion = "joy"
+    elif not detected_emotion:
+        detected_emotion = max(emotions, key=emotions.get)
     return detected_emotion, emotions
 
 # Function to store chat history in ChromaDB
