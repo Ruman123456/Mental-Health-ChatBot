@@ -9,9 +9,8 @@ from dotenv import load_dotenv
 from groq import Groq
 from langdetect import detect
 from deep_translator import GoogleTranslator  # Replace googletrans with deep-translator
-# Update Eleven Labs import to use the correct API
-import elevenlabs
-from elevenlabs.client import ElevenLabs
+# import elevenlabs
+# from elevenlabs.client import ElevenLabs
 
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
@@ -22,15 +21,14 @@ if not GROQ_API_KEY:
 # Configure Eleven Labs API
 ELEVEN_LABS_API_KEY = os.getenv("ELEVEN_LABS_API_KEY")
 if ELEVEN_LABS_API_KEY:
-    # Set the API key using the proper method for this elevenlabs version
-    elevenlabs.api_key = ELEVEN_LABS_API_KEY
+    # We no longer need the Python SDK for the HTML widget
     eleven_labs_available = True
 else:
     eleven_labs_available = False
 
 # Configure Groq AI
 groq_client = Groq(api_key=GROQ_API_KEY)
-MODEL_NAME = "llama3-70b-8192"  # You can change this to other Groq models as needed
+MODEL_NAME = "meta-llama/llama-4-scout-17b-16e-instruct"  # Updated: older Llama models were decommissioned
 
 # Initialize ChromaDB for RAG
 client = chromadb.PersistentClient(path="./mental_health_memory")
@@ -376,7 +374,6 @@ with st.sidebar:
         st.markdown("Get your API key at [Eleven Labs](https://elevenlabs.io/)")
         user_api_key = st.text_input("Enter your Eleven Labs API key:", type="password")
         if user_api_key:
-            elevenlabs.api_key = user_api_key
             eleven_labs_available = True
             st.success("API key set successfully!")
     
